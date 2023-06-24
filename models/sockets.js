@@ -1,4 +1,9 @@
-const { updateCurrentlyWatching, getCurrentlyWatching } = require("../controllers/Socket");
+const {
+  updateCurrentlyWatching,
+  getCurrentlyWatching,
+  updateWatchList,
+  getWatchList,
+} = require("../controllers/Socket");
 
 class Sockets {
   constructor(io) {
@@ -16,6 +21,13 @@ class Sockets {
         await updateCurrentlyWatching(data);
         const response = await getCurrentlyWatching(data);
         socket.emit("watchingMovies", response);
+      });
+
+      socket.on("my-list-add", async (data) => {
+        await updateWatchList(data);
+        const response = await getWatchList(data);
+        console.log(response);
+        socket.emit("my-list-get", response);
       });
 
       socket.on("disconnect", (data) => {

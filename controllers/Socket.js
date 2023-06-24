@@ -23,7 +23,7 @@ const getCurrentlyWatching = async (data) => {
   const watchingMoviePromises = user.currentlyWatching.map(async (movie) => {
     const movieData = await Movie.findById(movie.movie);
     return {
-      id: movie.movie,
+      _id: movie.movie,
       title: movieData.title,
       poster: movieData.poster,
       advance: movieData.advance,
@@ -44,7 +44,40 @@ const getCurrentlyWatching = async (data) => {
   return watchingMovie;
 };
 
+const updateWatchList = async (data) => {
+  try {
+    const user = await User.findById(data.user);
+    const watchingList = user.watchlist.includes(data.movieId);
+    if (!watchingList) {
+      user.watchlist.push(data.movieId);
+    }
+    await user.save();
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getWatchList = async (data) => {
+  try {
+    // const user = await User.findById(data.user);
+    // const watchingMoviePromises = user.currentlyWatching.map(async (movie) => {
+    //   const movieData = await Movie.findById(movie.movie);
+    //   return {
+
+    //   }
+    // })
+    const user = await User.findById(data.user);
+    const watchlistMovies = await Movie.find({ _id: { $in: user.watchlist } });
+    return watchlistMovies;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   updateCurrentlyWatching,
   getCurrentlyWatching,
+  updateWatchList,
+  getWatchList,
 };

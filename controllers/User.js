@@ -87,7 +87,32 @@ const Login = async (req, res) => {
   }
 };
 
+const getUser = async (req, res) => {
+  try {
+    const { user } = req.body;
+    const newUser = await User.findById(user);
+    if (newUser) {
+      return res.status(201).json({
+        id: newUser._id,
+        name: newUser.name,
+        image: newUser.image,
+        subscribed: newUser.subscribed,
+        subscriptionPlan: newUser.subscriptionPlan,
+        watchlist: newUser.watchlist,
+        currentlyWatching: newUser.currentlyWatching,
+      });
+    }
+  } catch (error) {
+    return res.status(501).json({
+      success: false,
+      message: "Hubo un error con al encontrar el usuario",
+      error: err,
+    });
+  }
+};
+
 module.exports = {
   SignUp,
   Login,
+  getUser,
 };
