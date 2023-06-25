@@ -111,8 +111,38 @@ const getUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id, token } = req.body;
+    const user = await User.findById(id);
+    if (!user) {
+      res.status(500).json({
+        success: false,
+        message: "Hubo un error con el  usuario no encontrado",
+        error,
+      });
+    }
+
+    user.notification_token = token;
+    await user.save();
+
+    return res.status(201).json({
+      success: true,
+      message: "El usuario Actualizado",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(501).json({
+      success: false,
+      message: "Hubo un error con al actualizar el usuario",
+      error: err,
+    });
+  }
+};
+
 module.exports = {
   SignUp,
   Login,
   getUser,
+  updateUser,
 };
