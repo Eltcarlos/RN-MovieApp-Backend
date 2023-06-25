@@ -1,8 +1,10 @@
 {
-  "rewrites": [
+  "version": 2,
+  "builds": [{ "src": "*.js", "use": "@vercel/node" }],
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "destination": "/api"
+      "src": "/(.*)",
+      "dest": "/"
     }
   ]
 }
