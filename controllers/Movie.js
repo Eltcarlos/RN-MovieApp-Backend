@@ -172,6 +172,21 @@ const searchMovies = async (req, res) => {
     });
   }
 };
+const GetRandomMovie = async (req, res) => {
+  try {
+    const count = await Movie.countDocuments();
+    const randomIndex = Math.floor(Math.random() * count);
+    const randomMovie = await Movie.findOne().skip(randomIndex);
+
+    res.status(200).json(randomMovie);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener una película al azar",
+      error: error.message,
+    });
+  }
+};
 
 module.exports = {
   CreateMovie,
@@ -180,5 +195,6 @@ module.exports = {
   GetWatchingList,
   GetSimilarMovies,
   GetByGenreMovies,
+  GetRandomMovie,
   searchMovies,
 };

@@ -10,5 +10,6 @@ router.post("/getwatchinglist", movie.GetWatchingList);
 router.post("/similarmovies", movie.GetSimilarMovies);
 router.get("/getbygenremovies/:genre", movie.GetByGenreMovies);
 router.get("/search", movie.searchMovies);
+router.get("/poster", movie.GetRandomMovie);
 
 module.exports = router;
