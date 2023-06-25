@@ -132,10 +132,30 @@ const GetSimilarMovies = async (req, res) => {
   }
 };
 
+const GetByGenreMovies = async (req, res) => {
+  try {
+    console.log("hola");
+    const { genre } = req.params;
+    console.log(genre);
+    const movies = await Movie.aggregate([
+      { $match: { "genres.name": genre } },
+      { $sample: { size: 10 } }, // Obtener 10 películas al azar
+    ]);
+    res.status(200).json(movies);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error al obtener las peliculas",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   CreateMovie,
   GetMoviesMostViews,
   GetWatchList,
   GetWatchingList,
   GetSimilarMovies,
+  GetByGenreMovies,
 };
