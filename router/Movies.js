@@ -9,5 +9,6 @@ router.post("/getwatchlist", movie.GetWatchList);
 router.post("/getwatchinglist", movie.GetWatchingList);
 router.post("/similarmovies", movie.GetSimilarMovies);
 router.get("/getbygenremovies/:genre", movie.GetByGenreMovies);
+router.get("/search", movie.searchMovies);
 
 module.exports = router;

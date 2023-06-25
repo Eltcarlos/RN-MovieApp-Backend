@@ -151,6 +151,28 @@ const GetByGenreMovies = async (req, res) => {
   }
 };
 
+const searchMovies = async (req, res) => {
+  const { query } = req.query;
+  console.log(query);
+  try {
+    const movies = await Movie.find({
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { "genres.name": { $regex: query, $options: "i" } },
+        { cast: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    res.status(200).json(movies);
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error al realizar la búsqueda de películas",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   CreateMovie,
   GetMoviesMostViews,
@@ -158,4 +180,5 @@ module.exports = {
   GetWatchingList,
   GetSimilarMovies,
   GetByGenreMovies,
+  searchMovies,
 };
