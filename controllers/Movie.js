@@ -153,7 +153,6 @@ const GetByGenreMovies = async (req, res) => {
 
 const searchMovies = async (req, res) => {
   const { query } = req.query;
-  console.log(query);
   try {
     const movies = await Movie.find({
       $or: [
