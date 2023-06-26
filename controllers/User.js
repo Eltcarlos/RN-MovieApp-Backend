@@ -114,7 +114,10 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id, token } = req.body;
-    const user = await User.findById(id);
+    console.log(token);
+    const user = await User.findByIdAndUpdate(id, {
+      notification_token: token,
+    });
     if (!user) {
       res.status(500).json({
         success: false,
@@ -122,10 +125,7 @@ const updateUser = async (req, res) => {
         error,
       });
     }
-
-    user.notification_token = token;
     await user.save();
-
     return res.status(201).json({
       success: true,
       message: "El usuario Actualizado",

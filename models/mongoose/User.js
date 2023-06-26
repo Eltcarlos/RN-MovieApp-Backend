@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema(
     },
     notification_token: {
       type: String,
+      default: "",
     },
     subscribed: {
       type: Boolean,
