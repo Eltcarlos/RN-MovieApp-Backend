@@ -114,7 +114,13 @@ const getUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id, token } = req.body;
-    console.log(token);
+    if (token === undefined) {
+      res.status(500).json({
+        success: false,
+        message: "Hubo un error con el token encontrado",
+        error,
+      });
+    }
     const user = await User.findByIdAndUpdate(id, {
       notification_token: token,
     });
