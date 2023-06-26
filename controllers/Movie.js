@@ -17,7 +17,6 @@ const CreateMovie = async (req, res) => {
       cast,
       totalViews,
     } = req.body;
-    console.log(totalViews);
     const movie = new Movie({
       title,
       poster,
@@ -134,9 +133,7 @@ const GetSimilarMovies = async (req, res) => {
 
 const GetByGenreMovies = async (req, res) => {
   try {
-    console.log("hola");
     const { genre } = req.params;
-    console.log(genre);
     const movies = await Movie.aggregate([
       { $match: { "genres.name": genre } },
       { $sample: { size: 10 } }, // Obtener 10 películas al azar
