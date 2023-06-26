@@ -24,7 +24,9 @@ class Server {
       cors: {
         origin: "*",
         methods: ["GET", "POST"],
+        transports: ["websocket"],
       },
+      allowEIO3: true,
     });
   }
 
